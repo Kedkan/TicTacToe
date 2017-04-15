@@ -23,21 +23,23 @@ using namespace std;
 #include "Header.h"
 
 char cSymbol;
+int *iMove = new int[2];
 
 int main()
 {
-	char board[5][5];
+	char iBoard[5][5];
+	
 
 	::cSymbol = 'O';
-	drawGameBoard(board);
+	drawGameBoard(iBoard);
 
-	while (checkWin(board, cSymbol) == false && deadHeat(board) == true) round(board, cSymbol);
+	while (checkWin(iBoard, cSymbol) == false && deadHeat(iBoard) == true) round(iBoard, cSymbol);
 
-	if (checkWin(board, cSymbol) == true)
+	if (checkWin(iBoard, cSymbol) == true)
 	{
 		cout << "You win! player: " << cSymbol << ":)\n";
 	}
-	else if (deadHeat(board) == true)
+	else if (deadHeat(iBoard) == true)
 	{
 		cout << "Dead Heat! ;p\n";
 	}

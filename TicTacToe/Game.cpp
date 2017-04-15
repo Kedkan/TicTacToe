@@ -22,7 +22,7 @@ using namespace std;
 
 #include "Header.h"
 
-int iMove[2];
+
 
 //Return true if player wins
 bool checkWin(char board[][5], char symbol)
@@ -98,8 +98,8 @@ void round(char board[][5], char &gamer)
 	else
 	{
 		computerMove(board);
-		iX = iMove[0];
-		iY = iMove[1];
+		iX = *iMove;
+		iY = *(iMove + 1);
 		
 	}
 	if (board[iX][iY] = ' ') board[iX][iY] = gamer;
@@ -157,8 +157,8 @@ void computerMove(char board[][5])
 				if (iTemp > iMaxScore)
 				{
 					iMaxScore = iTemp;
-					::iMove[0] = i;
-					::iMove[1] = j;
+					*iMove = i;
+					*(iMove + 1) = j;
 				}
 			}
 		}

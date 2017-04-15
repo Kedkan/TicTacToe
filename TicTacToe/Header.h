@@ -9,3 +9,4 @@ int minMax(char board[][5], char gamer);				//MinMax recursion algorithm
 void computerMove(char board[][5]);						//Computer best move
 
 extern char cSymbol;									//Game symbol 'X' or 'O'
+extern int *iMove;
