@@ -1,0 +1,2 @@
+# TicTacToe
+Testing minmax algorithm.
