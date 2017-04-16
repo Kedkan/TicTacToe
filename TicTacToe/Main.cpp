@@ -23,23 +23,25 @@ using namespace std;
 #include "Header.h"
 
 char cSymbol;
-int *iMove = new int[2];
 
 int main()
 {
-	char iBoard[5][5];
-	
+	char cTab[9] = { ' ',' ',' ',' ',' ',' ',' ',' ',' ' };
+	char *cBoard = cTab;
 
 	::cSymbol = 'O';
-	drawGameBoard(iBoard);
 
-	while (checkWin(iBoard, cSymbol) == false && deadHeat(iBoard) == true) round(iBoard, cSymbol);
+	while (checkWin(cBoard,cSymbol) == false && deadHeat(cBoard) == false)
+	{
+		round(cBoard, cSymbol);
+	}
 
-	if (checkWin(iBoard, cSymbol) == true)
+	//to do -> bug wrong symbol
+	if (checkWin(cBoard, cSymbol) == true)
 	{
 		cout << "You win! player: " << cSymbol << ":)\n";
 	}
-	else if (deadHeat(iBoard) == true)
+	else if (deadHeat(cBoard) == true)
 	{
 		cout << "Dead Heat! ;p\n";
 	}
@@ -47,6 +49,8 @@ int main()
 	{
 		cout << "You lose :(\n";
 	}
+
+	//to do -> score array, board opitons, game options
 	
 	system("pause");
 	return 0;

@@ -1,12 +1,10 @@
 #pragma once
 
-void drawGameBoard(char board[][5]);					//Prepares game board
-void showGameBoard(char board[][5]);					//Show game board
-bool checkWin(char board[][5], char symbol);			//return true if player wins
-bool deadHeat(char board[][5]);							//Return true if nobody wins
-void round(char board[][5], char &gamer);				//Player round
-int minMax(char board[][5], char gamer);				//MinMax recursion algorithm
-void computerMove(char board[][5]);						//Computer best move
+void drawGameBoard(char *cBoard);						//Prepares game board
+bool checkWin(char *cBoard, char symbol);				//return true if player wins
+bool deadHeat(char *cBoard);							//Return true if nobody wins
+void round(char *cBoard, char &symbol);					//Player round
+int minMax(char *cBoard, char symbol);					//MinMax recursion algorithm
+int computerMove(char *cBoard);							//Computer best move
 
 extern char cSymbol;									//Game symbol 'X' or 'O'
-extern int *iMove;
