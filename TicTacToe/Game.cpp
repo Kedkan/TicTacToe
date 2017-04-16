@@ -1,11 +1,11 @@
 /**********************************************************************
-* Project           : TicTacToe
+* Project           		: TicTacToe
 *
 * File name			: Game.cpp
 *
 * Author			: Dawid_Wilk
 *
-* Date created		: 20170327
+* Date created			: 20170327
 *
 * Purpose			: Game algorithm.
 *
