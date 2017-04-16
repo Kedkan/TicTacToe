@@ -95,7 +95,7 @@ Algorithm find the best computer move.
 
 int minMax(char *cBoard, char symbol)
 {
-	int iTemp;					//Temp variable
+	int iTemp;				//Temp variable
 	int iMaxScore;				//Maximal move score
 
 	//Check that current player win, if yes, return his best score
@@ -147,8 +147,8 @@ Function return computer move.
 int computerMove(char *cBoard)
 {
 	int iMaxScore;				//Maximal move score
-	int iTemp;					//Temp variable
-	int iMove;					//Computer and player move
+	int iTemp;				//Temp variable
+	int iMove;				//Computer and player move
 
 	iMaxScore = -10;			//Set score to min value
 
@@ -178,7 +178,7 @@ void round(char *cBoard, char &symbol)
 {
 	int iMove = 0;
 
-	drawGameBoard(cBoard);		//Show game board
+	drawGameBoard(cBoard);			//Show game board
 
 	//Player move
 	if (symbol == 'O')
