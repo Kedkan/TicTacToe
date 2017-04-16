@@ -1,6 +1,6 @@
 #pragma once
 
-void drawGameBoard(char *cBoard);						    //Prepares game board
+void drawGameBoard(char *cBoard);						  //Prepares game board
 bool checkWin(char *cBoard, char symbol);				//return true if player wins
 bool deadHeat(char *cBoard);							      //Return true if nobody wins
 void round(char *cBoard, char &symbol);					//Player round
