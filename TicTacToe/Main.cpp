@@ -26,32 +26,30 @@ char cSymbol;
 
 int main()
 {
-	char cTab[9] = { ' ',' ',' ',' ',' ',' ',' ',' ',' ' };
+	char cTab[9] = { ' ',' ',' ',' ',' ',' ',' ',' ',' ' };		//game board
 	char *cBoard = cTab;
+	char cChoice;
 
 	::cSymbol = 'O';
 
-	while (checkWin(cBoard,cSymbol) == false && deadHeat(cBoard) == false)
+	do
 	{
-		round(cBoard, cSymbol);
-	}
+		cout << "--------------------------------------\n"
+			<< "|.....:::::TIC TAC TOE GAME:::::.....|\n"
+			<< "--------------------------------------\n";
 
-	//to do -> bug wrong symbol
-	if (checkWin(cBoard, cSymbol) == true)
-	{
-		cout << "You win! player: " << cSymbol << ":)\n";
-	}
-	else if (deadHeat(cBoard) == true)
-	{
-		cout << "Dead Heat! ;p\n";
-	}
-	else
-	{
-		cout << "You lose :(\n";
-	}
+		resetGameBoard(cBoard);		//reset game
 
-	//to do -> score array, board opitons, game options
-	
+		while (checkWin(cBoard, 'X', false) == false && checkWin(cBoard, 'O', false) == false && deadHeat(cBoard, false) == false)
+		{
+			round(cBoard, cSymbol);
+		};
+
+		cout << "You want to play again? Y? N?\n";
+		cin >> cChoice;
+	}
+	while ((cChoice == 'Y') || (cChoice == 'y'));
+
 	system("pause");
 	return 0;
 }

@@ -52,3 +52,15 @@ void drawGameBoard(char *cBoard)
 	}
 
 }
+
+/**********************************************************************
+Function reset a Game Board, set all field to the default value ' '.
+**********************************************************************/
+
+void resetGameBoard(char *cBoard)
+{
+	for (int i = 0; i < 9; i++)
+	{
+		*(cBoard + i) = ' ';
+	}
+}

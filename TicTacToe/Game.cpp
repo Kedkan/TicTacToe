@@ -27,42 +27,53 @@ using namespace std;
 
 
 /**********************************************************************
-Function return TRUE if one player wins.
+Function return TRUE if one player wins,
+bTemp stop the infinite loop minMax and checkWin.
 **********************************************************************/
 
-bool checkWin(char *cBoard, char symbol)
+bool checkWin(char *cBoard, char cSymbol, bool bTemp)
 {
+	bool bWin = false;		//true if player have three the same char in column, line or cross
 
 	//Check rows in Array, if the same, return TRUE
 	for (int i = 0; i < 7; i += 3)
 	{
-		if ((*cBoard == symbol) && (*(cBoard + 2) == symbol) && (*(cBoard + 3) == symbol))
+		if ((*cBoard == cSymbol) && (*(cBoard + 2) == cSymbol) && (*(cBoard + 3) == cSymbol))
 		{
-			return true;
+			bWin = true;
 			break;
 		}
 
 		//Check columns in Array, if the same, return TRUE
 		for (int i = 0; i < 3; i++)
 		{
-			if ((*cBoard == symbol) && (*(cBoard + 3) == symbol) && (*(cBoard + 6) == symbol))
+			if ((*cBoard == cSymbol) && (*(cBoard + 3) == cSymbol) && (*(cBoard + 6) == cSymbol))
 			{
-				return true;
+				bWin = true;
 				break;
 			}
 
 			//Check cross cTab[0]-cTab[4]-cTab[8]
-			if ((*cBoard == symbol) && (*(cBoard + 4) == symbol) && (*(cBoard + 8) == symbol))
+			if ((*cBoard == cSymbol) && (*(cBoard + 4) == cSymbol) && (*(cBoard + 8) == cSymbol))
 			{
-				return true;
+				bWin = true;
 			}
 
 			//Check cross cTab[6]-cTab[4]-cTab[2]
-			if ((*(cBoard + 6) == symbol) && (*(cBoard + 4) == symbol) && (*(cBoard + 2) == symbol))
+			if ((*(cBoard + 6) == cSymbol) && (*(cBoard + 4) == cSymbol) && (*(cBoard + 2) == cSymbol))
 			{
-				return true;
+				bWin =  true;
 			}
 
+		}
+	}
+
+	if (bWin)			//true if one player win
+	{
+		if (!bTemp)		//true if bWin is true
+		{
+			cout << "You win! player: " << cSymbol << ":)\n";
+			return true;
 		}
 	}
 
@@ -71,10 +82,11 @@ bool checkWin(char *cBoard, char symbol)
 
 /**********************************************************************
 Function return TRUE if Game Board is no free point and
-both players doesn't win, otherwise return FALSE.
+both players doesn't win, otherwise return FALSE,
+bTemp stop the infinite loop minMax and checkWin.
 **********************************************************************/
 
-bool deadHeat(char *cBoard)
+bool deadHeat(char *cBoard, bool bTemp)
 {
 	for (int i = 0; i < 9; i++)
 	{
@@ -82,6 +94,11 @@ bool deadHeat(char *cBoard)
 		{
 			return false;
 		}
+	}
+
+	if (!bTemp)
+	{
+		cout << "Dead heat :( \n";
 	}
 
 	return true;
@@ -93,32 +110,32 @@ Algorithm find the best computer move.
 'symbol' = actual player
 **********************************************************************/
 
-int minMax(char *cBoard, char symbol)
+int minMax(char *cBoard, char cSymbol)
 {
 	int iTemp;					//Temp variable
 	int iMaxScore;				//Maximal move score
 
 	//Check that current player win, if yes, return his best score
-	if (checkWin(cBoard, symbol) == true)
+	if (checkWin(cBoard, cSymbol, true) == true)
 	{
-		return (symbol == 'X') ? 1 : -1;
+		return (cSymbol == 'X') ? 1 : -1;
 	}
 
 	//Check that is no Dead Heat, if yes, return 0
-	if (deadHeat(cBoard) == true)
+	if (deadHeat(cBoard, true) == true)
 	{
 		return 0;
 	}
 
 	//Change current player, to opposite player
-	symbol = (symbol == 'X') ? 'O' : 'X';
+	cSymbol = (cSymbol == 'X') ? 'O' : 'X';
 
 	//Algorithm analize player move and move opposite player,
 	//for player calculate maximum game score, and for opposite player
 	//calculate minimum score:
 	//X - calculate max -> iMaxScore = -10
 	//O - calculate min -> iMaxScore =  10
-	iMaxScore = (symbol == 'O') ? 10 : -10;
+	iMaxScore = (cSymbol == 'O') ? 10 : -10;
 
 	//Algorithm looking for free field, and set player symbol, then calculate
 	//the best move using recursion
@@ -127,10 +144,10 @@ int minMax(char *cBoard, char symbol)
 	{
 		if (*(cBoard + i) == ' ')
 		{
-			*(cBoard + i) = symbol;
-			iTemp = minMax(cBoard, symbol);
+			*(cBoard + i) = cSymbol;
+			iTemp = minMax(cBoard, cSymbol);
 			*(cBoard + i) = ' ';
-			if (((symbol == 'O') && (iTemp < iMaxScore)) || ((symbol == 'X') && (iTemp > iMaxScore)))
+			if (((cSymbol == 'O') && (iTemp < iMaxScore)) || ((cSymbol == 'X') && (iTemp > iMaxScore)))
 			{
 				iMaxScore = iTemp;
 			}
@@ -174,14 +191,14 @@ int computerMove(char *cBoard)
 Function return player move.
 **********************************************************************/
 
-void round(char *cBoard, char &symbol)
+void round(char *cBoard, char &cSymbol)
 {
 	int iMove = 0;
 
 	drawGameBoard(cBoard);			//Show game board
 
 	//Player move
-	if (symbol == 'O')
+	if (cSymbol == 'O')
 	{
 		cout << "Player\n";
 		cout << "Please specify coordinates your move: \n";
@@ -195,11 +212,12 @@ void round(char *cBoard, char &symbol)
 	//Check condition >=0 and <=8 and == ' '
 	if ((iMove >= 0) && (iMove <= 8) && (*(cBoard + iMove) == ' '))
 	{
-		*(cBoard + iMove) = symbol;
+		*(cBoard + iMove) = cSymbol;
 	}
 	//Change player
-	symbol = (symbol == 'O') ? 'X' : 'O';
+	cSymbol = (cSymbol == 'O') ? 'X' : 'O';
 
 	//Clean console
 	system("cls");
 }
+
