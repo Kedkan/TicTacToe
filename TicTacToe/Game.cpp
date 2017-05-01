@@ -191,7 +191,7 @@ int computerMove(char *cBoard)
 Function return player move.
 **********************************************************************/
 
-void round(char *cBoard, char &cSymbol)
+void round(char *cBoard, char &cSymbol, bool (*answer)(int,char*))
 {
 	int iMove = 0;
 
@@ -200,19 +200,38 @@ void round(char *cBoard, char &cSymbol)
 	//Player move
 	if (cSymbol == 'O')
 	{
-		cout << "Player\n";
-		cout << "Please specify coordinates your move: \n";
-		cin >> iMove;
+		bool correct = false;
+
+		do
+		{
+			cout << "Player\n";
+			cout << "Please specify coordinates your move: \n";
+			cin >> iMove;
+
+			//Check that function address !0
+			if (answer)
+			{
+				//Check player move
+				correct = answer(iMove, cBoard);
+			}
+			else
+			{
+				correct = true;
+			}
+		} while (!correct);
+
+		*(cBoard + iMove) = cSymbol;
 	}
 	//Computer move
 	else
 	{
 		iMove = computerMove(cBoard);
-	}
-	//Check condition >=0 and <=8 and == ' '
-	if ((iMove >= 0) && (iMove <= 8) && (*(cBoard + iMove) == ' '))
-	{
-		*(cBoard + iMove) = cSymbol;
+
+		//Check computer move
+		if ((iMove >= 0) && (iMove <= 8) && (*(cBoard + iMove) == ' '))
+		{
+			*(cBoard + iMove) = cSymbol;
+		}
 	}
 	//Change player
 	cSymbol = (cSymbol == 'O') ? 'X' : 'O';
@@ -220,4 +239,22 @@ void round(char *cBoard, char &cSymbol)
 	//Clean console
 	system("cls");
 }
+
+/**********************************************************************
+Check condition >=0 and <=8 and == ' '.
+**********************************************************************/
+
+bool checkBoardField(int iAnswer, char *cBoard)
+{
+	if ((iAnswer >= 0) && (iAnswer <= 8) && (*(cBoard + iAnswer) == ' '))
+	{
+		return true;
+	}
+	else
+	{
+		cout << "Bad address!\n";
+		return false;
+	}
+}
+
 

@@ -42,7 +42,7 @@ int main()
 
 		while (checkWin(cBoard, 'X', false) == false && checkWin(cBoard, 'O', false) == false && deadHeat(cBoard, false) == false)
 		{
-			round(cBoard, cSymbol);
+			round(cBoard, cSymbol, &checkBoardField);
 		};
 
 		cout << "You want to play again? Y? N?\n";
