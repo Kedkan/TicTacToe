@@ -1,128 +1,46 @@
 /**********************************************************************
 * Project           : TicTacToe
-*
 * File name			: Game.cpp
-*
 * Author			: Dawid_Wilk
-*
 * Date created		: 20170327
-*
-* Purpose			: Game algorithm.
-*
+* Purpose			: Game algorithm
 * Revision History :
 *
 * Date        Author      Ref    Revision(Date in YYYYMMDD format)
-*20170416	  DW		  1.0	 Use in checkWin One-Dimensional Array.
-*20170416	  DW		  1.0	 Use in deadHeat One-Dimensional Array.
 *20170416	  DW		  1.0	 Use in minMax One-Dimensional Array.
 *20170416	  DW		  1.0	 Use in computerMove One-Dimensional Array.
 *20170416	  DW		  1.0	 Use in round One-Dimensional Array.
+*20170501	  DW		  1.1	 Version 1.1.
 **********************************************************************/
 
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
 
-#include "Header.h"
+#include "Game.h"
+#include "CheckBoard.h"
+#include "BoardDraw.h"
 
-
-/**********************************************************************
-Function return TRUE if one player wins,
-bTemp stop the infinite loop minMax and checkWin.
-**********************************************************************/
-
-bool checkWin(char *cBoard, char cSymbol, bool bTemp)
-{
-	bool bWin = false;		//true if player have three the same char in column, line or cross
-
-	//Check rows in Array, if the same, return TRUE
-	for (int i = 0; i < 7; i += 3)
-	{
-		if ((*cBoard == cSymbol) && (*(cBoard + 2) == cSymbol) && (*(cBoard + 3) == cSymbol))
-		{
-			bWin = true;
-			break;
-		}
-
-		//Check columns in Array, if the same, return TRUE
-		for (int i = 0; i < 3; i++)
-		{
-			if ((*cBoard == cSymbol) && (*(cBoard + 3) == cSymbol) && (*(cBoard + 6) == cSymbol))
-			{
-				bWin = true;
-				break;
-			}
-
-			//Check cross cTab[0]-cTab[4]-cTab[8]
-			if ((*cBoard == cSymbol) && (*(cBoard + 4) == cSymbol) && (*(cBoard + 8) == cSymbol))
-			{
-				bWin = true;
-			}
-
-			//Check cross cTab[6]-cTab[4]-cTab[2]
-			if ((*(cBoard + 6) == cSymbol) && (*(cBoard + 4) == cSymbol) && (*(cBoard + 2) == cSymbol))
-			{
-				bWin =  true;
-			}
-
-		}
-	}
-
-	if (bWin)			//true if one player win
-	{
-		if (!bTemp)		//true if bWin is true
-		{
-			cout << "You win! player: " << cSymbol << ":)\n";
-			return true;
-		}
-	}
-
-	return false;
-}
-
-/**********************************************************************
-Function return TRUE if Game Board is no free point and
-both players doesn't win, otherwise return FALSE,
-bTemp stop the infinite loop minMax and checkWin.
-**********************************************************************/
-
-bool deadHeat(char *cBoard, bool bTemp)
-{
-	for (int i = 0; i < 9; i++)
-	{
-		if (*(cBoard + i) == ' ')
-		{
-			return false;
-		}
-	}
-
-	if (!bTemp)
-	{
-		cout << "Dead heat :( \n";
-	}
-
-	return true;
-}
 
 /**********************************************************************
 MiniMax recursion algorithm.
 Algorithm find the best computer move.
 'symbol' = actual player
 **********************************************************************/
-
-int minMax(char *cBoard, char cSymbol)
+int Game::minMax(char *cBoard, char cSymbol)
 {
 	int iTemp;					//Temp variable
 	int iMaxScore;				//Maximal move score
-
+	CheckBoard TcheckBoard;		//Check win and dead heat function
+	
 	//Check that current player win, if yes, return his best score
-	if (checkWin(cBoard, cSymbol, true) == true)
+	if (TcheckBoard.checkWin(cBoard, cSymbol, true) == true)
 	{
 		return (cSymbol == 'X') ? 1 : -1;
 	}
 
 	//Check that is no Dead Heat, if yes, return 0
-	if (deadHeat(cBoard, true) == true)
+	if (TcheckBoard.deadHeat(cBoard, true) == true)
 	{
 		return 0;
 	}
@@ -160,8 +78,7 @@ int minMax(char *cBoard, char cSymbol)
 /**********************************************************************
 Function return computer move.
 **********************************************************************/
-
-int computerMove(char *cBoard)
+int Game::computerMove(char *cBoard)
 {
 	int iMaxScore;				//Maximal move score
 	int iTemp;					//Temp variable
@@ -188,14 +105,16 @@ int computerMove(char *cBoard)
 }
 
 /**********************************************************************
-Function return player move.
+Function return player move.bool (*answer)(int,char*)
 **********************************************************************/
-
-void round(char *cBoard, char &cSymbol, bool (*answer)(int,char*))
+void Game::round(char *cBoard, char &cSymbol, CheckBoard *point )
 {
-	int iMove = 0;
+	int iMove = 0;				//Reset player move
+	CheckBoard TcheckBoard;		//Check board field function
+	BoardDraw TboardDraw;		//Draw game board function
 
-	drawGameBoard(cBoard);			//Show game board
+	//Show game board
+	TboardDraw.drawGameBoard(cBoard);
 
 	//Player move
 	if (cSymbol == 'O')
@@ -209,10 +128,10 @@ void round(char *cBoard, char &cSymbol, bool (*answer)(int,char*))
 			cin >> iMove;
 
 			//Check that function address !0
-			if (answer)
+			if (point)
 			{
 				//Check player move
-				correct = answer(iMove, cBoard);
+				correct = TcheckBoard.checkBoardField(iMove, cBoard);
 			}
 			else
 			{
@@ -240,21 +159,5 @@ void round(char *cBoard, char &cSymbol, bool (*answer)(int,char*))
 	system("cls");
 }
 
-/**********************************************************************
-Check condition >=0 and <=8 and == ' '.
-**********************************************************************/
-
-bool checkBoardField(int iAnswer, char *cBoard)
-{
-	if ((iAnswer >= 0) && (iAnswer <= 8) && (*(cBoard + iAnswer) == ' '))
-	{
-		return true;
-	}
-	else
-	{
-		cout << "Bad address!\n";
-		return false;
-	}
-}
 
 

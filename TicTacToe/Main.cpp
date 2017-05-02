@@ -1,36 +1,35 @@
 /**********************************************************************
 * Project           : TicTacToe
-*
 * Program name		: TicTacToe.cpp
-*
 * Author			: Dawid_Wilk
-*
 * Date created		: 20170326
-*
-* Purpose			: Test minmax algorithm.
-*
+* Purpose			: Test minmax algorithm
 * Revision History :
 *
 * Date        Author      Ref    Revision(Date in YYYYMMDD format)
-*
-*
+*20170501	  DW		  1.1	 Version 1.1.
 **********************************************************************/
 
 
 #include <iostream>
 using namespace std;
 
-#include "Header.h"
+#include "BoardDraw.h"
+#include "Game.h"
 
-char cSymbol;
 
 int main()
 {
-	char cTab[9] = { ' ',' ',' ',' ',' ',' ',' ',' ',' ' };		//game board
+	char cTab[9] = { ' ',' ',' ',' ',' ',' ',' ',' ',' ' };		//Default game board
 	char *cBoard = cTab;
-	char cChoice;
+	char cChoice;												//Player choice after win/lose game
+	char cSymbol = 'O';											//Default game char
+	
 
-	::cSymbol = 'O';
+	BoardDraw TboardDraw;
+	Game Tgame;
+	CheckBoard TcheckBoard;
+	CheckBoard *checkBoardField = &TcheckBoard;
 
 	do
 	{
@@ -38,11 +37,11 @@ int main()
 			<< "|.....:::::TIC TAC TOE GAME:::::.....|\n"
 			<< "--------------------------------------\n";
 
-		resetGameBoard(cBoard);		//reset game
+		TboardDraw.resetGameBoard(cBoard);		//reset game
 
-		while (checkWin(cBoard, 'X', false) == false && checkWin(cBoard, 'O', false) == false && deadHeat(cBoard, false) == false)
+		while (TcheckBoard.checkWin(cBoard, 'X', false) == false && TcheckBoard.checkWin(cBoard, 'O', false) == false && TcheckBoard.deadHeat(cBoard, false) == false)
 		{
-			round(cBoard, cSymbol, &checkBoardField);
+			Tgame.round(cBoard, cSymbol, checkBoardField);
 		};
 
 		cout << "You want to play again? Y? N?\n";

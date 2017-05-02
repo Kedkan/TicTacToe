@@ -1,25 +1,21 @@
 /**********************************************************************
 * Project           : TicTacToe
-*
 * File name			: BoardDraw.cpp
-*
 * Author			: Dawid_Wilk
-*
 * Date created		: 20170326
-*
-* Purpose			: Game board.
-*
+* Purpose			: Game board
 * Revision History :
 *
 * Date        Author      Ref    Revision(Date in YYYYMMDD format)
 *20170416	  DW		  1.0	 Delete showGameBoard function.		
 *20170416	  DW		  1.0	 Use in drawGameBoard One-Dimensional Array.
+*20170501	  DW		  1.1	 Version 1.1.
 **********************************************************************/
 
 #include <iostream>
 using namespace std;
 
-#include "Header.h"
+#include "BoardDraw.h"
 
 /**********************************************************************
 Function draw a Game Board, using One-Dimensional Array.
@@ -28,8 +24,7 @@ cTab[0] cTab[1] cTab[2]
 cTab[3] cTab[4] cTab[5]
 cTab[6] cTab[7] cTab[8]
 **********************************************************************/
-
-void drawGameBoard(char *cBoard)				 						
+void BoardDraw::drawGameBoard(char *cBoard)
 {
 	for (int i = 1; i < 10; i++)
 	{
@@ -56,8 +51,7 @@ void drawGameBoard(char *cBoard)
 /**********************************************************************
 Function reset a Game Board, set all field to the default value ' '.
 **********************************************************************/
-
-void resetGameBoard(char *cBoard)
+void BoardDraw::resetGameBoard(char *cBoard)
 {
 	for (int i = 0; i < 9; i++)
 	{
