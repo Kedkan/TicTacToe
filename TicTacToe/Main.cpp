@@ -24,12 +24,7 @@ int main()
 	char *cBoard = cTab;
 	char cChoice;												//Player choice after win/lose game
 	char cSymbol = 'O';											//Default game char
-	
-
-	BoardDraw TboardDraw;
-	Game Tgame;
-	CheckBoard TcheckBoard;
-	CheckBoard *checkBoardField = &TcheckBoard;
+	Game Tgame;													//Game one
 
 	do
 	{
@@ -37,11 +32,11 @@ int main()
 			<< "|.....:::::TIC TAC TOE GAME:::::.....|\n"
 			<< "--------------------------------------\n";
 
-		TboardDraw.resetGameBoard(cBoard);		//reset game
+		BoardDraw::resetGameBoard(cBoard);		//reset game
 
-		while (TcheckBoard.checkWin(cBoard, 'X', false) == false && TcheckBoard.checkWin(cBoard, 'O', false) == false && TcheckBoard.deadHeat(cBoard, false) == false)
+		while (CheckBoard::checkWin(cBoard, 'X', false) == false && CheckBoard::checkWin(cBoard, 'O', false) == false && CheckBoard::deadHeat(cBoard, false) == false)
 		{
-			Tgame.round(cBoard, cSymbol, checkBoardField);
+			Tgame.round(cBoard, cSymbol);
 		};
 
 		cout << "You want to play again? Y? N?\n";

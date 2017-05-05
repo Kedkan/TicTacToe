@@ -18,9 +18,6 @@
 using namespace std;
 
 #include "Game.h"
-#include "CheckBoard.h"
-#include "BoardDraw.h"
-
 
 /**********************************************************************
 MiniMax recursion algorithm.
@@ -31,16 +28,15 @@ int Game::minMax(char *cBoard, char cSymbol)
 {
 	int iTemp;					//Temp variable
 	int iMaxScore;				//Maximal move score
-	CheckBoard TcheckBoard;		//Check win and dead heat function
 	
 	//Check that current player win, if yes, return his best score
-	if (TcheckBoard.checkWin(cBoard, cSymbol, true) == true)
+	if (CheckBoard::checkWin(cBoard, cSymbol, true) == true)
 	{
 		return (cSymbol == 'X') ? 1 : -1;
 	}
 
 	//Check that is no Dead Heat, if yes, return 0
-	if (TcheckBoard.deadHeat(cBoard, true) == true)
+	if (CheckBoard::deadHeat(cBoard, true) == true)
 	{
 		return 0;
 	}
@@ -48,7 +44,7 @@ int Game::minMax(char *cBoard, char cSymbol)
 	//Change current player, to opposite player
 	cSymbol = (cSymbol == 'X') ? 'O' : 'X';
 
-	//Algorithm analize player move and move opposite player,
+	//Algorithm analyze player move and move opposite player,
 	//for player calculate maximum game score, and for opposite player
 	//calculate minimum score:
 	//X - calculate max -> iMaxScore = -10
@@ -105,16 +101,14 @@ int Game::computerMove(char *cBoard)
 }
 
 /**********************************************************************
-Function return player move.bool (*answer)(int,char*)
+Function return player move.
 **********************************************************************/
-void Game::round(char *cBoard, char &cSymbol, CheckBoard *point )
+void Game::round(char *cBoard, char &cSymbol)
 {
 	int iMove = 0;				//Reset player move
-	CheckBoard TcheckBoard;		//Check board field function
-	BoardDraw TboardDraw;		//Draw game board function
 
 	//Show game board
-	TboardDraw.drawGameBoard(cBoard);
+	BoardDraw::drawGameBoard(cBoard);
 
 	//Player move
 	if (cSymbol == 'O')
@@ -127,16 +121,9 @@ void Game::round(char *cBoard, char &cSymbol, CheckBoard *point )
 			cout << "Please specify coordinates your move: \n";
 			cin >> iMove;
 
-			//Check that function address !0
-			if (point)
-			{
-				//Check player move
-				correct = TcheckBoard.checkBoardField(iMove, cBoard);
-			}
-			else
-			{
-				correct = true;
-			}
+			//Check player move
+			correct = CheckBoard::checkBoardField(iMove, cBoard);
+	
 		} while (!correct);
 
 		*(cBoard + iMove) = cSymbol;

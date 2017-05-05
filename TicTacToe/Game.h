@@ -11,6 +11,7 @@
 **********************************************************************/
 
 #include "CheckBoard.h"
+#include "BoardDraw.h"
 
 #ifndef _GAME_H_
 #define _GAME_H_
@@ -18,9 +19,11 @@
 class Game
 {
 private:
+	friend BoardDraw;
+	friend CheckBoard;
 	int minMax(char *cBoard, char cSymbol);									//MinMax recursion algorithm
 	int computerMove(char *cBoard);											//Computer best move
 public:
-	void round(char *cBoard, char &cSymbol, CheckBoard *point);				//Player round
+	void round(char *cBoard, char &cSymbol);								//Player round
 };
 #endif // _GAME_H_

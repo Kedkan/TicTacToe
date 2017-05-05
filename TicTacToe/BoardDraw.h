@@ -16,8 +16,8 @@
 class BoardDraw
 {
 public:
-	void drawGameBoard(char *cBoard);			//Prepares game board
-	void resetGameBoard(char *cBoard);			//Reset game board
+	static void drawGameBoard(char *cBoard);			//Prepares game board
+	static void resetGameBoard(char *cBoard);			//Reset game board
 };
 #endif // _BOARDDRAW_h_
 
