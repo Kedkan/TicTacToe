@@ -8,10 +8,11 @@
 *
 * Date        Author      Ref    Revision(Date in YYYYMMDD format)
 *20170501	  DW		  1.1	 Version 1.1.
+*20170603     DW          1.1    Change IDE to CLion
 **********************************************************************/
 
 
-#include <iostream>
+#include <iostream>s
 using namespace std;
 
 #include "BoardDraw.h"
