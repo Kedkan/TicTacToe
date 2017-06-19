@@ -15,7 +15,7 @@
 class CheckBoard
 {
 public:
-	static bool checkBoardField(short int iAnswer, char *cBoard);		//Check condition >=0 and <=8 and == ' '
+	static bool checkBoardField(int iAnswer, char *cBoard);		        //Check condition >=0 and <=8 and == ' '
 	static bool checkWin(char *cBoard, char cSymbol, bool bTemp);		//return true if player wins
 	static bool deadHeat(char *cBoard, bool bTemp);						//Return true if nobody wins
 };

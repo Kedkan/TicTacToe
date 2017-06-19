@@ -14,10 +14,20 @@
 **********************************************************************/
 
 #include <iostream>
-#include <stdlib.h>
+
 using namespace std;
 
 #include "Game.h"
+
+/**********************************************************************
+Clean console: Windows, OS X, Linux
+**********************************************************************/
+
+#ifdef _WIN32
+#define CLEAR "cls"
+#else //In any other OS
+#define CLEAR "clear"
+#endif
 
 /**********************************************************************
 MiniMax recursion algorithm.
@@ -30,13 +40,13 @@ int Game::minMax(char *cBoard, char cSymbol)
 	int iMaxScore;				//Maximal move score
 	
 	//Check that current player win, if yes, return his best score
-	if (CheckBoard::checkWin(cBoard, cSymbol, true) == true)
+	if (CheckBoard::checkWin(cBoard, cSymbol, true))
 	{
 		return (cSymbol == 'X') ? 1 : -1;
 	}
 
 	//Check that is no Dead Heat, if yes, return 0
-	if (CheckBoard::deadHeat(cBoard, true) == true)
+	if (CheckBoard::deadHeat(cBoard, true))
 	{
 		return 0;
 	}
@@ -83,19 +93,19 @@ int Game::computerMove(char *cBoard)
 	iMaxScore = -10;			//Set score to min value
 
 	for (int i = 0; i < 9; i++)
-	{
-		if (*(cBoard + i) == ' ')
-		{
-			*(cBoard + i) = 'X';
-			iTemp = minMax(cBoard, 'X');
-			*(cBoard + i) = ' ';
-			if (iTemp > iMaxScore)
-			{
-				iMaxScore = iTemp;
-				iMove = i;
-			}
-		}
-	}
+    {
+        if (*(cBoard + i) == ' ')
+        {
+            *(cBoard + i) = 'X';
+            iTemp = minMax(cBoard, 'X');
+            *(cBoard + i) = ' ';
+            if (iTemp > iMaxScore)
+            {
+                iMaxScore = iTemp;
+                iMove = i;
+            }
+        }
+    }
 
 	return iMove;				//Return computer move
 }
@@ -113,7 +123,7 @@ void Game::round(char *cBoard, char &cSymbol)
 	//Player move
 	if (cSymbol == 'O')
 	{
-		bool correct = false;
+		bool correct;
 
 		do
 		{
@@ -143,8 +153,11 @@ void Game::round(char *cBoard, char &cSymbol)
 	cSymbol = (cSymbol == 'O') ? 'X' : 'O';
 
 	//Clean console
-	system("cls");
+    system(CLEAR);
 }
+
+
+
 
 
 

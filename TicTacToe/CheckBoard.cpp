@@ -19,7 +19,7 @@ using namespace std;
 /**********************************************************************
 Check condition >=0 and <=8 and == ' '.
 **********************************************************************/
-bool CheckBoard::checkBoardField(short int iAnswer, char *cBoard)
+bool CheckBoard::checkBoardField(int iAnswer, char *cBoard)
 {
 	if ((iAnswer >= 0) && (iAnswer <= 8) && (*(cBoard + iAnswer) == ' '))
 	{

@@ -19,5 +19,5 @@ public:
 	static void drawGameBoard(char *cBoard);			//Prepares game board
 	static void resetGameBoard(char *cBoard);			//Reset game board
 };
-#endif // _BOARDDRAW_h_
+#endif // _BOARDDRAW_H_
 

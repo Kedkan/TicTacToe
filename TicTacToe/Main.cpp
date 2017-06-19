@@ -12,12 +12,13 @@
 **********************************************************************/
 
 
-#include <iostream>s
+#include <iostream>
 using namespace std;
 
 #include "BoardDraw.h"
 #include "Game.h"
 
+void scoreTable(char cSymbol, int &iScorePlayer, int &iScoreComputer);
 
 int main()
 {
@@ -25,6 +26,8 @@ int main()
 	char *cBoard = cTab;
 	char cChoice;												//Player choice after win/lose game
 	char cSymbol = 'O';											//Default game char
+    int  iScorePlayer = 0;                                      //Player game score
+    int  iScoreComputer = 0;                                    //Computer game score
 	Game Tgame;													//Game one
 
 	do
@@ -35,16 +38,31 @@ int main()
 
 		BoardDraw::resetGameBoard(cBoard);		//reset game
 
-		while (CheckBoard::checkWin(cBoard, 'X', false) == false && CheckBoard::checkWin(cBoard, 'O', false) == false && CheckBoard::deadHeat(cBoard, false) == false)
+		while ((!CheckBoard::checkWin(cBoard, 'X', false)) && (!CheckBoard::checkWin(cBoard, 'O', false)) && (!CheckBoard::deadHeat(cBoard, false)))
 		{
 			Tgame.round(cBoard, cSymbol);
 		};
 
+        scoreTable(cSymbol,iScorePlayer,iScoreComputer);
 		cout << "You want to play again? Y? N?\n";
+        cout << cSymbol;
+        cout << iScoreComputer; //to do X
 		cin >> cChoice;
 	}
 	while ((cChoice == 'Y') || (cChoice == 'y'));
 
-	system("pause");
+
 	return 0;
+}
+
+void scoreTable(char cSymbol, int & iScorePlayer, int & iScoreComputer)
+{
+    if (cSymbol == 'O')
+    {
+        iScorePlayer++;
+    }
+    if (cSymbol == 'X')
+    {
+        iScoreComputer++;
+    }
 }
