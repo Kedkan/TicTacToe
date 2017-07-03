@@ -18,16 +18,7 @@
 using namespace std;
 
 #include "Game.h"
-
-/**********************************************************************
-Clean console: Windows, OS X, Linux
-**********************************************************************/
-
-#ifdef _WIN32
-#define CLEAR "cls"
-#else //In any other OS
-#define CLEAR "clear"
-#endif
+#include "Define.h"
 
 /**********************************************************************
 MiniMax recursion algorithm.
@@ -42,7 +33,7 @@ int Game::minMax(char *cBoard, char cSymbol)
 	//Check that current player win, if yes, return his best score
 	if (CheckBoard::checkWin(cBoard, cSymbol, true))
 	{
-		return (cSymbol == 'X') ? 1 : -1;
+		return (cSymbol == CHAR_X) ? ONE : MONE;
 	}
 
 	//Check that is no Dead Heat, if yes, return 0
@@ -52,14 +43,14 @@ int Game::minMax(char *cBoard, char cSymbol)
 	}
 
 	//Change current player, to opposite player
-	cSymbol = (cSymbol == 'X') ? 'O' : 'X';
+	cSymbol = (cSymbol == CHAR_X) ? CHAR_O : CHAR_X;
 
 	//Algorithm analyze player move and move opposite player,
 	//for player calculate maximum game score, and for opposite player
 	//calculate minimum score:
 	//X - calculate max -> iMaxScore = -10
 	//O - calculate min -> iMaxScore =  10
-	iMaxScore = (cSymbol == 'O') ? 10 : -10;
+	iMaxScore = (cSymbol == CHAR_O) ? TEN : MTEN;
 
 	//Algorithm looking for free field, and set player symbol, then calculate
 	//the best move using recursion
@@ -71,7 +62,7 @@ int Game::minMax(char *cBoard, char cSymbol)
 			*(cBoard + i) = cSymbol;
 			iTemp = minMax(cBoard, cSymbol);
 			*(cBoard + i) = ' ';
-			if (((cSymbol == 'O') && (iTemp < iMaxScore)) || ((cSymbol == 'X') && (iTemp > iMaxScore)))
+			if (((cSymbol == CHAR_O) && (iTemp < iMaxScore)) || ((cSymbol == CHAR_X) && (iTemp > iMaxScore)))
 			{
 				iMaxScore = iTemp;
 			}
@@ -90,14 +81,14 @@ int Game::computerMove(char *cBoard)
 	int iTemp;					//Temp variable
 	int iMove;					//Computer and player move
 
-	iMaxScore = -10;			//Set score to min value
+	iMaxScore = MTEN;			//Set score to min value
 
 	for (int i = 0; i < 9; i++)
     {
         if (*(cBoard + i) == ' ')
         {
-            *(cBoard + i) = 'X';
-            iTemp = minMax(cBoard, 'X');
+            *(cBoard + i) = CHAR_X;
+            iTemp = minMax(cBoard, CHAR_X);
             *(cBoard + i) = ' ';
             if (iTemp > iMaxScore)
             {
@@ -115,13 +106,13 @@ Function return player move.
 **********************************************************************/
 void Game::round(char *cBoard, char &cSymbol)
 {
-	int iMove = 0;				//Reset player move
+	int iMove = ZERO;				//Reset player move
 
 	//Show game board
 	BoardDraw::drawGameBoard(cBoard);
 
 	//Player move
-	if (cSymbol == 'O')
+	if (cSymbol == CHAR_O)
 	{
 		bool correct;
 
@@ -150,7 +141,7 @@ void Game::round(char *cBoard, char &cSymbol)
 		}
 	}
 	//Change player
-	cSymbol = (cSymbol == 'O') ? 'X' : 'O';
+	cSymbol = (cSymbol == CHAR_O) ? CHAR_X : CHAR_O;
 
 	//Clean console
     system(CLEAR);

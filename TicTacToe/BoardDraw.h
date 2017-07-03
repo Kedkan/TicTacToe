@@ -10,8 +10,8 @@
 *20170501	  DW		  1.1	 Version 1.1.
 **********************************************************************/
 
-#ifndef _BOARDDRAW_H_
-#define _BOARDDRAW_H_
+#ifndef TICTACTOE_BOARDDRAW_H_
+#define TICTACTOE_BOARDDRAW_H_
 
 class BoardDraw
 {
@@ -19,5 +19,5 @@ public:
 	static void drawGameBoard(char *cBoard);			//Prepares game board
 	static void resetGameBoard(char *cBoard);			//Reset game board
 };
-#endif // _BOARDDRAW_H_
+#endif // TICTACTOE_BOARDDRAW_H_
 

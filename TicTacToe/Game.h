@@ -14,8 +14,8 @@
 #include "CheckBoard.h"
 #include "BoardDraw.h"
 
-#ifndef _GAME_H_
-#define _GAME_H_
+#ifndef TICTACTOE_GAME_H_
+#define TICTACTOE_GAME_H_
 
 class Game
 {
@@ -27,4 +27,4 @@ private:
 public:
 	void round(char *cBoard, char &cSymbol);								//Player round
 };
-#endif // _GAME_H_
+#endif // TICTACTOE_GAME_H_

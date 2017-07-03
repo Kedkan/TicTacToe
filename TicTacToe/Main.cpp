@@ -17,52 +17,112 @@ using namespace std;
 
 #include "BoardDraw.h"
 #include "Game.h"
+#include "Define.h"
 
-void scoreTable(char cSymbol, int &iScorePlayer, int &iScoreComputer);
+void scoreTable(char *cBoard, int & iScorePlayer, int & iScoreComputer);
+void showMenu();
+
+/**********************************************************************/
 
 int main()
 {
 	char cTab[9] = { ' ',' ',' ',' ',' ',' ',' ',' ',' ' };		//Default game board
 	char *cBoard = cTab;
 	char cChoice;												//Player choice after win/lose game
-	char cSymbol = 'O';											//Default game char
-    int  iScorePlayer = 0;                                      //Player game score
-    int  iScoreComputer = 0;                                    //Computer game score
-	Game Tgame;													//Game one
+	char cSymbol = CHAR_O;									    //Default game char
+    int  iAnswer;                                               //Player menu choice
+    int  iScorePlayerOne = ZERO;                                //Player game score
+    int  iScorePlayerTwo = ZERO;                                //Computer game score
+	Game Tgame;													//Game one 9x9
 
-	do
-	{
-		cout << "--------------------------------------\n"
-			<< "|.....:::::TIC TAC TOE GAME:::::.....|\n"
-			<< "--------------------------------------\n";
+        showMenu();
 
-		BoardDraw::resetGameBoard(cBoard);		//reset game
+        do
+        {
+            cin >> iAnswer;     //Player menu choice
 
-		while ((!CheckBoard::checkWin(cBoard, 'X', false)) && (!CheckBoard::checkWin(cBoard, 'O', false)) && (!CheckBoard::deadHeat(cBoard, false)))
-		{
-			Tgame.round(cBoard, cSymbol);
-		};
+            switch (iAnswer)
+            {
+                case 1:
+                    do
+                    {
+                        BoardDraw::resetGameBoard(cBoard);		//reset game
 
-        scoreTable(cSymbol,iScorePlayer,iScoreComputer);
-		cout << "You want to play again? Y? N?\n";
-        cout << cSymbol;
-        cout << iScoreComputer; //to do X
-		cin >> cChoice;
-	}
-	while ((cChoice == 'Y') || (cChoice == 'y'));
+                            while  ((!CheckBoard::checkWin(cBoard, CHAR_X, false))
+                                   && (!CheckBoard::checkWin(cBoard, CHAR_O, false))
+                                   && (!CheckBoard::deadHeat(cBoard, false)))
+                            {
+                                Tgame.round(cBoard, cSymbol);
+                            };
 
+                        scoreTable(cBoard,iScorePlayerOne,iScorePlayerTwo);     //score counting
+                        cout << "You want to play again? Y? N?\n";
+                        cin >> cChoice;
+                    } while ((cChoice == CHAR_Y) || (cChoice == CHAR_y));
+                    break;
+
+                case 2:
+                    cout << "Test\n";
+                    break;
+
+                case 3:
+                {
+                    cout << "Player One: " << iScorePlayerOne << endl;
+                    cout << "Player Two: " << iScorePlayerTwo << endl;
+                }
+                    break;
+
+                case 4:
+                    cout << "to do";
+                    break;
+
+                default:
+                    cout << "BB.\n";
+            }
+        } while (iAnswer != 5);
 
 	return 0;
 }
 
-void scoreTable(char cSymbol, int & iScorePlayer, int & iScoreComputer)
+/**********************************************************************/
+
+
+/**********************************************************************
+Function increment iScorePlayerOne if Player O win the game,
+or increment IScorePlayerTwo if Player X win the game, if deadhead,
+no one score the point.
+**********************************************************************/
+
+void scoreTable(char *cBoard, int & iScorePlayerOne, int & iScorePlayerTwo)
 {
-    if (cSymbol == 'O')
+    if (CheckBoard::checkWin(cBoard, CHAR_O, false))
     {
-        iScorePlayer++;
+        iScorePlayerOne++;
     }
-    if (cSymbol == 'X')
+    if (CheckBoard::checkWin(cBoard, CHAR_X, false))
     {
-        iScoreComputer++;
+        iScorePlayerTwo++;
     }
+}
+
+/**********************************************************************
+Function show menu.
+**********************************************************************/
+
+void showMenu()
+{
+    cout  << "\n"
+          << "                  TIC TAC TOE                 \n"
+          << "\n"
+          << "\n"
+          << "\n"
+          << "        Select the option of your choice: \n"
+          << "\n"
+          << "          (1) New Game One Player\n"
+          << "          (2) New Game Two Players\n"
+          << "          (3) Show Score Table\n"
+          << "          (4) Game Options\n"
+          << "\n"
+          << "        Select 5 to Exit\n";
+
 }

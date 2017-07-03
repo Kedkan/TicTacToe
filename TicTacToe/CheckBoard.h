@@ -10,8 +10,8 @@
 *20170501	  DW		  1.1	 Version 1.1.
 **********************************************************************/
 
-#ifndef _CHECKBOARD_H_
-#define _CHECKBOARD_H_
+#ifndef TICTACTOE_CHECKBOARD_H_
+#define TICTACTOE_CHECKBOARD_H_
 class CheckBoard
 {
 public:
@@ -19,4 +19,4 @@ public:
 	static bool checkWin(char *cBoard, char cSymbol, bool bTemp);		//return true if player wins
 	static bool deadHeat(char *cBoard, bool bTemp);						//Return true if nobody wins
 };
-#endif // _CHECKBOARD_H_
+#endif // TICTACTOE_CHECKBOARD_H_
